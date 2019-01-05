@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Square Repos</string>
+    <string name="repositories">Repositories</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="stargazers">Stargazers</string>
+    <string name="details">Details</string>
+</resources>
