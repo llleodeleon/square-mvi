@@ -58,8 +58,6 @@ dependencies {
     implementation deps.rx.rxpermissions
     implementation deps.arch.navigation
     implementation deps.arch.navigationUI
-    implementation deps.arch.room
-    implementation deps.arch.roomRx
     implementation deps.arch.lifecycle
     implementation deps.utils.ktx
     implementation deps.utils.bindingAdapter
@@ -69,7 +67,6 @@ dependencies {
     kapt deps.kapt.databinding
     kapt deps.kapt.moshi
     kapt deps.kapt.lifecycle
-    kapt deps.kapt.room
 
     testImplementation deps.test.junit
     androidTestImplementation deps.test.runner
