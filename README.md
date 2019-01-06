@@ -6,7 +6,8 @@ Github Master-Detail app using Kotlin, RxJava and Model-View-Intent
 
 The GitHub API has a limit of 80 requests per hour without authentication 
 
-Click [here](https://github.com/settings/tokens/new) to create a new token. Put your token inside of the placeolder in the project gradle.properties
+Click [here](https://github.com/settings/tokens/new) to create a new token. 
+Put your token inside of the placeholder in the project's gradle.properties file
 
 ```
 GITHUB_TOKEN="YOUR-TOKEN-HERE"
