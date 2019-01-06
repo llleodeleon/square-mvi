@@ -49,7 +49,6 @@ deps.rx = [
         rxkotlin: "io.reactivex.rxjava2:rxkotlin:2.3.0",
         rxrelay: "com.jakewharton.rxrelay2:rxrelay:2.1.0",
         rxprefs: "com.f2prateek.rx.preferences2:rx-preferences:2.0.0",
-        rxpermissions: "com.github.tbruyelle:rxpermissions:0.10.2"
 ]
 deps.kapt = [
         glide: "com.github.bumptech.glide:compiler:$versions.glide",

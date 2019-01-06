@@ -6,7 +6,7 @@
     <data>
         <variable
             name="user"
-            type="com.leodeleon.square.entities.User"/>
+            type="com.leodeleon.domain.entities.User"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -2,7 +2,7 @@ package com.leodeleon.square.features.repos
 
 import android.databinding.ObservableBoolean
 import android.view.View
-import com.leodeleon.square.entities.Repo
+import com.leodeleon.domain.entities.Repo
 import com.leodeleon.square.utils.Navigator
 
 class RepoViewBinding(val repo: Repo) {

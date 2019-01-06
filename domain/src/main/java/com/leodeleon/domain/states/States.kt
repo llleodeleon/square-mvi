@@ -1,7 +1,6 @@
-package com.leodeleon.square.state
+package com.leodeleon.domain.states
 
-import com.leodeleon.square.entities.Repo
-import com.leodeleon.square.entities.User
+import com.leodeleon.domain.entities.*
 
 sealed class State
 object LoadingState : State()

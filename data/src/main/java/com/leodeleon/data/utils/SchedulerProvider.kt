@@ -1,4 +1,4 @@
-package com.leodeleon.square.utils
+package com.leodeleon.data.utils
 
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers

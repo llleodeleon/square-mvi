@@ -1,13 +1,11 @@
-package com.leodeleon.square.state
+package com.leodeleon.domain.states
 
-import com.freeletics.rxredux.SideEffect
-import com.leodeleon.square.data.GithubRepository
-import com.leodeleon.square.data.SharedRepository
+import com.leodeleon.domain.repositories.ILocalRepository
+import com.leodeleon.domain.repositories.IRemoteRepository
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
-
-class DetailsStateMachine(repository: GithubRepository, prefsRepository: SharedRepository) : BaseStateMachine() {
+class DetailsStateMachine(remote: IRemoteRepository, local: ILocalRepository) : BaseStateMachine() {
 
     override val initialState = EmptyState
 
@@ -26,7 +24,7 @@ class DetailsStateMachine(repository: GithubRepository, prefsRepository: SharedR
     override val effects= sideEffects {
         sideEffect<ShowRepo> {
             it.flatMap { action ->
-                repository.getStargazers(action.repo.name)
+                remote.getStargazers(action.repo.name)
                         .map<Action> { UsersLoaded(it) }
             }.onErrorReturn { ShowError("Error loading users") }
         }
@@ -34,7 +32,7 @@ class DetailsStateMachine(repository: GithubRepository, prefsRepository: SharedR
         sideEffect<UpdateBookmark> {
             it.flatMap<Action> { action ->
                 val bookmark = !action.isBookmarked
-                val result = if (bookmark) prefsRepository.saveBookmark(action.repo) else prefsRepository.removeBookmark(action.repo)
+                val result = if (bookmark) local.saveBookmark(action.repo) else local.removeBookmark(action.repo)
                 result.andThen(Observable.just(bookmark))
                         .map { BookmarkUpdated(it) }
             }

@@ -1,11 +1,9 @@
-package com.leodeleon.square.state
+package com.leodeleon.domain.states
 
-import com.leodeleon.square.data.GithubRepository
-import com.leodeleon.square.data.SharedRepository
-import com.leodeleon.square.utils.MVI
-import com.leodeleon.square.utils.logd
+import com.leodeleon.domain.repositories.ILocalRepository
+import com.leodeleon.domain.repositories.IRemoteRepository
 
-class ReposStateMachine(repository: GithubRepository, prefsRepository: SharedRepository): BaseStateMachine() {
+class ReposStateMachine(remote: IRemoteRepository, local: ILocalRepository): BaseStateMachine() {
 
     override val initialState = LoadingState
 
@@ -21,7 +19,7 @@ class ReposStateMachine(repository: GithubRepository, prefsRepository: SharedRep
     override val effects= sideEffects {
         sideEffect<LoadRepos> {
             it.flatMap<Action> {
-                repository.getSquareRepos()
+                remote.getSquareRepos()
                         .map<Action> {
                             ReposLoaded(it)
                         }
@@ -31,7 +29,7 @@ class ReposStateMachine(repository: GithubRepository, prefsRepository: SharedRep
 
         sideEffect<ReposLoaded> {
             it.doOnNext {
-                logd("ACTION: $it", MVI)
+                println("MVI ACTION: $it")
             }.map<Action> {
                 RefreshBookmarks
             }
@@ -39,7 +37,7 @@ class ReposStateMachine(repository: GithubRepository, prefsRepository: SharedRep
 
         sideEffect<RefreshBookmarks> {
             it.flatMap {
-                prefsRepository.getBookmarks()
+                local.getBookmarks()
                         .map<Action> {
                             BookmarksLoaded(it.map { it.id })
                         }

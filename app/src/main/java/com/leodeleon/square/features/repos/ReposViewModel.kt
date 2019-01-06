@@ -5,11 +5,11 @@ import android.databinding.ObservableArrayList
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
+import com.leodeleon.domain.states.*
 import com.leodeleon.square.BR
 import com.leodeleon.square.R
 import com.leodeleon.square.databinding.FragmentReposBinding
 import com.leodeleon.square.features.BaseViewModel
-import com.leodeleon.square.state.*
 import com.leodeleon.square.utils.*
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 

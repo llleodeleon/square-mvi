@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api deps.kotlin.stdlib
+    api deps.rx.rxjava
+    api deps.rx.rxandroid
+    api deps.rx.rxrelay
+    implementation deps.rx.rxredux
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"

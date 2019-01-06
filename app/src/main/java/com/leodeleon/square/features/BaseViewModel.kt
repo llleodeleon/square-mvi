@@ -5,12 +5,10 @@ import android.content.Context
 import android.view.View
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
-import com.leodeleon.square.state.Action
-import com.leodeleon.square.state.BaseStateMachine
-import com.leodeleon.square.state.State
-import com.leodeleon.square.utils.MVI
-import com.leodeleon.square.utils.SchedulerProvider
-import com.leodeleon.square.utils.logd
+import com.leodeleon.data.utils.SchedulerProvider
+import com.leodeleon.domain.states.Action
+import com.leodeleon.domain.states.BaseStateMachine
+import com.leodeleon.domain.states.State
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.addTo
@@ -27,7 +25,7 @@ abstract class BaseViewModel(stateMachine: BaseStateMachine) : ViewModel() {
         stateMachine.state
                 .observeOn(SchedulerProvider.main())
                 .doOnNext {
-                    logd("Rendering state: $it", MVI)
+                    println("MVI: Rendering state: $it")
                 }
                 .subscribe(::render)
                 .addTo(subscriptions)

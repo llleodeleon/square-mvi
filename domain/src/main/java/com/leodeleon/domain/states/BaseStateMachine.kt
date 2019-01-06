@@ -1,12 +1,10 @@
-package com.leodeleon.square.state
+package com.leodeleon.domain.states
 
 import com.freeletics.rxredux.SideEffect
 import com.freeletics.rxredux.reduxStore
 import com.freeletics.rxredux.StateAccessor
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
-import com.leodeleon.square.utils.MVI
-import com.leodeleon.square.utils.logd
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
@@ -19,14 +17,14 @@ abstract class BaseStateMachine {
     val input: Relay<Action> = PublishRelay.create()
 
     val state: Observable<State> by lazy {
-        input.doOnNext { logd("Input action $it", MVI) }
+        input.doOnNext { println("MVI: Input action $it") }
                 .reduxStore(
                         initialState = initialState,
                         reducer = ::reducer,
                         sideEffects = effects
                 )
                 .distinctUntilChanged()
-                .doOnNext { logd("RxStore state: $it", MVI) }
+                .doOnNext { println("MVI: RxStore state: $it") }
     }
 
     abstract fun reducer(state: State, action: Action): State

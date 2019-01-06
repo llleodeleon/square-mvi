@@ -6,13 +6,13 @@ import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
+import com.leodeleon.domain.entities.Repo
+import com.leodeleon.domain.entities.User
+import com.leodeleon.domain.states.*
 import com.leodeleon.square.BR
 import com.leodeleon.square.R
 import com.leodeleon.square.databinding.FragmentDetailsBinding
-import com.leodeleon.square.entities.Repo
-import com.leodeleon.square.entities.User
 import com.leodeleon.square.features.BaseViewModel
-import com.leodeleon.square.state.*
 import com.leodeleon.square.utils.gone
 import com.leodeleon.square.utils.snack
 import com.leodeleon.square.utils.visible

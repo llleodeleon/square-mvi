@@ -3,7 +3,7 @@
     <data>
         <variable
             name="repo"
-            type="com.leodeleon.square.entities.Repo"/>
+            type="com.leodeleon.domain.entities.Repo"/>
         <variable
             name="viewModel"
             type="com.leodeleon.square.features.details.DetailsViewModel"/>

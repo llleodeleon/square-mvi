@@ -1,14 +1,14 @@
-package com.leodeleon.square.entities
+package com.leodeleon.data.entities
 
-import android.os.Parcelable
+import com.leodeleon.domain.entities.Repo
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
-@Parcelize
-data class Repo(
+data class RepoEntity(
         val id : Long,
         val name : String,
         @Json(name="stargazers_count") val stars : Int
-): Parcelable
+) {
+    fun unwrap() = Repo(id, name, stars)
+}

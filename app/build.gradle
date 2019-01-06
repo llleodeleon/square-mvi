@@ -34,28 +34,17 @@ androidExtensions {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":data")
     implementation deps.support.appcompat
     implementation deps.support.design
     implementation deps.support.cardview
     implementation deps.support.recyclerview
     implementation deps.support.constraint
-    implementation deps.net.retrofit
-    implementation deps.net.retrofitMoshi
-    implementation deps.net.retrofitRx
-    implementation deps.net.moshi
-    implementation deps.net.okhttp
     implementation deps.net.glide
-    implementation deps.kotlin.stdlib
+    implementation deps.rx.rxkotlin
     implementation deps.kotlin.koin
     implementation deps.kotlin.koinScope
     implementation deps.kotlin.koinViewModel
-    implementation deps.rx.rxjava
-    implementation deps.rx.rxandroid
-    implementation deps.rx.rxredux
-    implementation deps.rx.rxkotlin
-    implementation deps.rx.rxrelay
-    implementation deps.rx.rxprefs
-    implementation deps.rx.rxpermissions
     implementation deps.arch.navigation
     implementation deps.arch.navigationUI
     implementation deps.arch.lifecycle
@@ -65,7 +54,6 @@ dependencies {
 
     kapt deps.kapt.glide
     kapt deps.kapt.databinding
-    kapt deps.kapt.moshi
     kapt deps.kapt.lifecycle
 
     testImplementation deps.test.junit
