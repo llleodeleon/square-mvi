@@ -4,13 +4,15 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.leodeleon.square.BuildConfig
-import com.leodeleon.square.StateMachine
+import com.leodeleon.square.state.BaseStateMachine
 import com.leodeleon.square.data.GithubRepository
 import com.leodeleon.square.data.GithubService
 import com.leodeleon.square.data.NetworkInterceptor
 import com.leodeleon.square.data.SharedRepository
 import com.leodeleon.square.features.details.DetailsViewModel
 import com.leodeleon.square.features.repos.ReposViewModel
+import com.leodeleon.square.state.DetailsStateMachine
+import com.leodeleon.square.state.ReposStateMachine
 import com.leodeleon.square.utils.BASE_URL
 import com.leodeleon.square.utils.SchedulerProvider
 import okhttp3.Cache
@@ -27,7 +29,8 @@ import java.util.concurrent.TimeUnit
 val appModule = module {
     viewModel { ReposViewModel(get()) }
     viewModel { DetailsViewModel(get()) }
-    factory { StateMachine(get(),get()) }
+    single { ReposStateMachine(get(), get()) }
+    single { DetailsStateMachine(get(), get()) }
     single { provideOkHttp(get(),get()) }
     single { provideService<GithubService>(get()) }
     single { GithubRepository(get()) }

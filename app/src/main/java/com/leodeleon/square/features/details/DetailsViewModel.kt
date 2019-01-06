@@ -6,33 +6,31 @@ import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
-import com.leodeleon.square.Action.*
 import com.leodeleon.square.BR
 import com.leodeleon.square.R
-import com.leodeleon.square.StateMachine
-import com.leodeleon.square.StateMachine.State.*
 import com.leodeleon.square.databinding.FragmentDetailsBinding
 import com.leodeleon.square.entities.Repo
 import com.leodeleon.square.entities.User
 import com.leodeleon.square.features.BaseViewModel
+import com.leodeleon.square.state.*
 import com.leodeleon.square.utils.gone
 import com.leodeleon.square.utils.snack
 import com.leodeleon.square.utils.visible
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
-class DetailsViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) {
+class DetailsViewModel(stateMachine: DetailsStateMachine) : BaseViewModel(stateMachine) {
 
     private lateinit var binding: FragmentDetailsBinding
     private var snackbar: Snackbar? = null
 
-    val itemBinding = ItemBinding.of<User>(BR.user, R.layout.item_user)
+    val itemBinding: ItemBinding<User> = ItemBinding.of<User>(BR.user, R.layout.item_user)
     val items = ObservableArrayList<User>()
 
-    interface  OnUpdateRepo {
-        fun onClick(view:View, repo: Repo)
+    interface OnUpdateRepo {
+        fun onClick(view: View, repo: Repo)
     }
 
-    private val clickListener = object: OnUpdateRepo {
+    private val clickListener = object : OnUpdateRepo {
         override fun onClick(view: View, repo: Repo) {
             input.accept(UpdateBookmark(repo, view.isSelected))
         }
@@ -45,13 +43,13 @@ class DetailsViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) 
         return binding.root
     }
 
-    override fun render(state: StateMachine.State) {
+    override fun render(state: State) {
         binding.apply {
-            if(state !is ErrorState){
-                if(errorBinding!!.errorGroup.isVisible)
+            if (state !is ErrorState) {
+                if (errorBinding!!.errorGroup.isVisible)
                     errorBinding.errorGroup.gone()
             }
-            when(state){
+            when (state) {
                 is ShowRepoState -> {
                     this.repo = state.repo
                     fab.isSelected = state.isBookmarked
@@ -61,7 +59,7 @@ class DetailsViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) 
                 }
                 is ShowUsersState -> {
                     usersRecycler.visible()
-                    if(items.isEmpty()){
+                    if (items.isEmpty()) {
                         state.users.toCollection(items)
                     }
                 }
@@ -70,12 +68,13 @@ class DetailsViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) 
                     usersRecycler.gone()
                 }
                 is SnackState -> {
-                    if(state.shouldShow){
+                    if (state.shouldShow) {
                         snackbar = root.snack(state.message)
                     } else {
                         snackbar?.dismiss()
                     }
                 }
             }
-        }    }
+        }
+    }
 }

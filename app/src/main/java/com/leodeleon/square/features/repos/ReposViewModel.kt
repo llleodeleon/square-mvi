@@ -5,21 +5,18 @@ import android.databinding.ObservableArrayList
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
-import com.leodeleon.square.Action.*
 import com.leodeleon.square.BR
 import com.leodeleon.square.R
-import com.leodeleon.square.StateMachine
-import com.leodeleon.square.StateMachine.State.*
-import com.leodeleon.square.StateMachine.State
 import com.leodeleon.square.databinding.FragmentReposBinding
 import com.leodeleon.square.features.BaseViewModel
+import com.leodeleon.square.state.*
 import com.leodeleon.square.utils.*
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
-class ReposViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) {
+class ReposViewModel(stateMachine: ReposStateMachine): BaseViewModel(stateMachine) {
     private lateinit var binding: FragmentReposBinding
 
-    val itemBinding= ItemBinding.of<RepoViewBinding>(BR.viewBinding, R.layout.item_repo)
+    val itemBinding: ItemBinding<RepoViewBinding> = ItemBinding.of(BR.viewBinding, R.layout.item_repo)
     val items = ObservableArrayList<RepoViewBinding>()
 
     override fun inflateView(context: Context): View {

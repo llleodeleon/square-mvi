@@ -6,10 +6,10 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.leodeleon.square.Action.*
 import com.leodeleon.square.MainActivity
 import com.leodeleon.square.R
 import com.leodeleon.square.entities.Repo
+import com.leodeleon.square.state.ShowRepo
 import com.leodeleon.square.utils.EXTRA_BOOKMARK
 import com.leodeleon.square.utils.EXTRA_REPO
 import com.leodeleon.square.utils.booleanArg

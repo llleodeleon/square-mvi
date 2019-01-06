@@ -1,22 +1,21 @@
 package com.leodeleon.square.features
 
-
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.view.View
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
-import com.leodeleon.square.Action
-import com.leodeleon.square.StateMachine
+import com.leodeleon.square.state.Action
+import com.leodeleon.square.state.BaseStateMachine
+import com.leodeleon.square.state.State
 import com.leodeleon.square.utils.MVI
 import com.leodeleon.square.utils.SchedulerProvider
 import com.leodeleon.square.utils.logd
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
 
-abstract class BaseViewModel(stateMachine: StateMachine) : ViewModel() {
+abstract class BaseViewModel(stateMachine: BaseStateMachine) : ViewModel() {
 
     private val inputRelay: Relay<Action> = PublishRelay.create()
     private val subscriptions = CompositeDisposable()
@@ -40,5 +39,5 @@ abstract class BaseViewModel(stateMachine: StateMachine) : ViewModel() {
     }
 
     abstract fun inflateView(context: Context): View
-    abstract fun render(state: StateMachine.State)
+    abstract fun render(state: State)
 }
