@@ -36,7 +36,7 @@ abstract class BaseViewModel(stateMachine: StateMachine) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        subscriptions.dispose()
+        subscriptions.clear()
     }
 
     abstract fun inflateView(context: Context): View
