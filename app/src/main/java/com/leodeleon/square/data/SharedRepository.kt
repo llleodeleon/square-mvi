@@ -9,7 +9,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Types
 import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Observable
 
 class SharedRepository(private val rxPrefs: RxSharedPreferences, private val sharedPrefs: SharedPreferences){
 
@@ -31,10 +31,11 @@ class SharedRepository(private val rxPrefs: RxSharedPreferences, private val sha
         }
     }
 
-    fun getBookmarks(): Single<List<Repo>> {
+    fun getBookmarks(): Observable<List<Repo>> {
         return rxPrefs.getObject(BOOKMARKS, emptyList(), converter)
                 .asObservable()
                 .firstOrError()
+                .toObservable()
                 .subscribeOn(SchedulerProvider.io())
     }
 

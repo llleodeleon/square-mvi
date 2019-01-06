@@ -120,6 +120,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/users_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="true"
@@ -138,14 +139,12 @@
             />
 
             <include
-                android:id="@+id/states_binding"
+                android:id="@+id/error_binding"
                 layout="@layout/view_error"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/header"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:visibility="gone"
-                tools:visibility="visible"
                 />
 
         </android.support.constraint.ConstraintLayout>

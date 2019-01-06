@@ -4,6 +4,7 @@ import android.content.Context
 import android.databinding.ObservableArrayList
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import com.leodeleon.square.Action.*
 import com.leodeleon.square.BR
 import com.leodeleon.square.R
@@ -29,13 +30,14 @@ class ReposViewModel(stateMachine: StateMachine): BaseViewModel(stateMachine) {
     }
 
     override fun render(state: State){
-        logd("Rendering state $state")
         binding.apply{
             if(state !is LoadingState){
-                loading.gone()
+                if(loading.isVisible)
+                    loading.gone()
             }
             if(state !is ErrorState) {
-                errorBinding!!.errorGroup.gone()
+               if(errorBinding!!.errorGroup.isVisible)
+                    errorBinding.errorGroup.gone()
             }
             when(state){
                 is ShowReposState -> {

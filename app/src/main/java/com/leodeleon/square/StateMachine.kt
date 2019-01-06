@@ -10,6 +10,7 @@ import com.leodeleon.square.entities.Repo
 import com.leodeleon.square.Action.*
 import com.leodeleon.square.StateMachine.State.*
 import com.leodeleon.square.entities.User
+import com.leodeleon.square.utils.MVI
 import com.leodeleon.square.utils.logd
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
@@ -30,7 +31,7 @@ private object HideSnack : Action()
 private object ShowLoading : Action()
 private data class ShowError(val message: String) : Action()
 
-class StateMachine(val repository: GithubRepository, val prefsRepository: SharedRepository) {
+class StateMachine(private val repository: GithubRepository, private val prefsRepository: SharedRepository) {
 
     sealed class State {
         object LoadingState : State()
@@ -46,7 +47,7 @@ class StateMachine(val repository: GithubRepository, val prefsRepository: Shared
     val input: Relay<Action> = PublishRelay.create()
 
     val state: Observable<State> = input
-            .doOnNext { logd("Input action $it", "MVI") }
+            .doOnNext { logd("Input action $it", MVI) }
             .reduxStore(
                     initialState = LoadingState,
                     reducer = ::reducer,
@@ -60,10 +61,11 @@ class StateMachine(val repository: GithubRepository, val prefsRepository: Shared
                     )
             )
             .distinctUntilChanged()
-            .doOnNext { logd("RxStore state $it", "MVI") }
+            .doOnNext { logd("RxStore state: $it", MVI) }
 
     private fun reducer(state: State, action: Action): State {
-        logd("Reducing action: $action Current state: $state", "MVI")
+        logd("Reducing action: $action", MVI)
+        logd("Current state: $state", MVI)
         return when (action) {
             is ShowLoading -> LoadingState
             is BookmarksLoaded -> BookmarksState(action.bookmarkIds)
@@ -82,9 +84,7 @@ class StateMachine(val repository: GithubRepository, val prefsRepository: Shared
         return actions.ofType(LoadRepos::class.java)
                 .flatMap<Action> {
                     repository.getSquareRepos()
-                            .map<Action> {
-                                ReposLoaded(it)
-                            }
+                            .map<Action> { ReposLoaded(it) }
                             .startWith(ShowLoading)
                             .onErrorReturn { ShowError("Error loading repos") }
                 }
@@ -101,9 +101,7 @@ class StateMachine(val repository: GithubRepository, val prefsRepository: Shared
         return actions.ofType(ShowRepo::class.java)
                 .flatMap { action ->
                     repository.getStargazers(action.repo.name)
-                            .map<Action> {
-                                UsersLoaded(it)
-                            }
+                            .map<Action> { UsersLoaded(it) }
                 }
                 .onErrorReturn {
                     ShowError("Error loading users")
@@ -113,10 +111,11 @@ class StateMachine(val repository: GithubRepository, val prefsRepository: Shared
     private fun loadBookmarksSideEffect(actions: Observable<Action>, state: StateAccessor<State>): Observable<Action> {
         return actions.ofType(RefreshBookmarks::class.java)
                 .flatMap {
-                    prefsRepository.getBookmarks().toObservable()
-                }
-                .map<Action> {
-                    BookmarksLoaded(it.map { it.id })
+                    prefsRepository.getBookmarks()
+                            .map<Action> {
+                                BookmarksLoaded(it.map { it.id })
+                            }
+
                 }
     }
 

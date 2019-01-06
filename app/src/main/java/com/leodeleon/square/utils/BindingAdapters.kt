@@ -15,7 +15,7 @@ object BindingAdapters {
     @JvmStatic
     fun loadImage(view: ImageView, imageUrl: String){
         val requestOptions = RequestOptions()
-                .transforms(RoundedCorners(16.dp))
+                .transforms(RoundedCorners(8.dp))
 
         GlideApp.with(view)
                 .load(imageUrl)

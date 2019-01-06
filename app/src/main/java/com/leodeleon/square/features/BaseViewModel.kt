@@ -8,6 +8,7 @@ import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
 import com.leodeleon.square.Action
 import com.leodeleon.square.StateMachine
+import com.leodeleon.square.utils.MVI
 import com.leodeleon.square.utils.SchedulerProvider
 import com.leodeleon.square.utils.logd
 import io.reactivex.disposables.CompositeDisposable
@@ -27,7 +28,7 @@ abstract class BaseViewModel(stateMachine: StateMachine) : ViewModel() {
         stateMachine.state
                 .observeOn(SchedulerProvider.main())
                 .doOnNext {
-                    logd("Rendering state: $it", "MVI")
+                    logd("Rendering state: $it", MVI)
                 }
                 .subscribe(::render)
                 .addTo(subscriptions)
@@ -35,7 +36,7 @@ abstract class BaseViewModel(stateMachine: StateMachine) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        subscriptions.clear()
+        subscriptions.dispose()
     }
 
     abstract fun inflateView(context: Context): View
