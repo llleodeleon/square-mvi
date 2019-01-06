@@ -23,7 +23,7 @@ class DetailsStateMachine(repository: GithubRepository, prefsRepository: SharedR
         }
     }
 
-    override val effects: List<SideEffect<State, Action>> = sideEffects {
+    override val effects= sideEffects {
         sideEffect<ShowRepo> {
             it.flatMap { action ->
                 repository.getStargazers(action.repo.name)

@@ -25,7 +25,6 @@ class ReposStateMachine(repository: GithubRepository, prefsRepository: SharedRep
                         .map<Action> {
                             ReposLoaded(it)
                         }
-                        .startWith(ShowLoading)
                         .onErrorReturn { ShowError("Error loading repos") }
             }
         }
