@@ -28,9 +28,7 @@ class ReposStateMachine(remote: IRemoteRepository, local: ILocalRepository): Bas
         }
 
         sideEffect<ReposLoaded> {
-            it.doOnNext {
-                println("MVI ACTION: $it")
-            }.map<Action> {
+            it.map<Action> {
                 RefreshBookmarks
             }
         }
