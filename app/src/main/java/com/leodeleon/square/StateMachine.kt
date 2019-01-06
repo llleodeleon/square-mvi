@@ -1,5 +1,6 @@
 package com.leodeleon.square
 
+import com.freeletics.rxredux.SideEffect
 import com.freeletics.rxredux.reduxStore
 import com.freeletics.rxredux.StateAccessor
 import com.jakewharton.rxrelay2.PublishRelay
@@ -13,6 +14,8 @@ import com.leodeleon.square.entities.User
 import com.leodeleon.square.utils.MVI
 import com.leodeleon.square.utils.logd
 import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.ObservableTransformer
 import java.util.concurrent.TimeUnit
 
 sealed class Action {
@@ -32,6 +35,14 @@ private object ShowLoading : Action()
 private data class ShowError(val message: String) : Action()
 
 class StateMachine(private val repository: GithubRepository, private val prefsRepository: SharedRepository) {
+
+    private val refreshBookmarksSideEffect = sideEffect<ReposLoaded> {
+        it.doOnNext {
+            logd("ACTION: $it", MVI)
+        }.map<Action> {
+            RefreshBookmarks
+        }
+    }
 
     sealed class State {
         object LoadingState : State()
@@ -57,7 +68,7 @@ class StateMachine(private val repository: GithubRepository, private val prefsRe
                             ::loadStargazersSideEffect,
                             ::updateBookmarkSideEffect,
                             ::loadBookmarksSideEffect,
-                            ::refreshBookmarksSideEffect
+                            refreshBookmarksSideEffect
                     )
             )
             .distinctUntilChanged()
@@ -90,12 +101,12 @@ class StateMachine(private val repository: GithubRepository, private val prefsRe
                 }
     }
 
-    private fun refreshBookmarksSideEffect(actions: Observable<Action>, state: StateAccessor<State>): Observable<Action> {
-        return actions.ofType(ReposLoaded::class.java)
-                .map<Action> {
-                    RefreshBookmarks
-                }
-    }
+//    private fun refreshBookmarksSideEffect(actions: Observable<Action>, state: StateAccessor<State>): Observable<Action> {
+//        return actions.ofType(ReposLoaded::class.java)
+//                .map<Action> {
+//                    RefreshBookmarks
+//                }
+//    }
 
     private fun loadStargazersSideEffect(actions: Observable<Action>, state: StateAccessor<State>): Observable<Action> {
         return actions.ofType(ShowRepo::class.java)
@@ -145,4 +156,16 @@ class StateMachine(private val repository: GithubRepository, private val prefsRe
     }
 
 
+    private inline fun<reified T: Action> sideEffect (crossinline block:(Observable<Action>) -> ObservableSource<Action>) : SideEffect<State,Action> {
+        return object : SideEffect<State,Action> {
+            override fun invoke(actions: Observable<Action>, state: StateAccessor<State>): Observable<out Action> {
+                return actions
+                        .ofType(T::class.java)
+                        .cast(Action::class.java)
+                        .compose(ObservableTransformer {
+                            return@ObservableTransformer block(it)
+                        })
+            }
+        }
+    }
 }

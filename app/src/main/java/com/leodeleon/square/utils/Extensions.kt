@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import com.freeletics.rxredux.SideEffect
 
 val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
