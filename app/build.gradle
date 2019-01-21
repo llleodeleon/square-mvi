@@ -11,7 +11,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -32,29 +32,28 @@ androidExtensions {
     experimental = true
 }
 
+//To see which deps need to update run: gradle dependencyUpdates -Drevision=release
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":data")
-    implementation deps.support.appcompat
-    implementation deps.support.design
-    implementation deps.support.cardview
-    implementation deps.support.recyclerview
-    implementation deps.support.constraint
+    implementation deps.jetpack.appcompat
+    implementation deps.jetpack.cardview
+    implementation deps.jetpack.recyclerview
+    implementation deps.jetpack.constraint
+    implementation deps.jetpack.livedata
+    implementation deps.jetpack.fragment
+    implementation deps.jetpack.ktx
+    implementation deps.google.design
     implementation deps.net.glide
     implementation deps.rx.rxkotlin
     implementation deps.kotlin.koin
-    implementation deps.kotlin.koinScope
     implementation deps.kotlin.koinViewModel
     implementation deps.arch.navigation
     implementation deps.arch.navigationUI
-    implementation deps.arch.lifecycle
-    implementation deps.utils.ktx
     implementation deps.utils.bindingAdapter
     implementation deps.utils.bindingRecycler
 
     kapt deps.kapt.glide
-    kapt deps.kapt.databinding
-    kapt deps.kapt.lifecycle
 
     testImplementation deps.test.junit
     androidTestImplementation deps.test.runner

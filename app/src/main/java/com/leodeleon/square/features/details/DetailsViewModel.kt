@@ -1,8 +1,8 @@
 package com.leodeleon.square.features.details
 
 import android.content.Context
-import android.databinding.ObservableArrayList
-import android.support.design.widget.Snackbar
+import androidx.databinding.ObservableArrayList
+import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
