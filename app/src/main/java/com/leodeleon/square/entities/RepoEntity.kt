@@ -1,9 +1,11 @@
 package com.leodeleon.square.entities
 
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import com.leodeleon.domain.entities.Repo
 import kotlinx.android.parcel.Parcelize
 
+@SuppressLint("ParcelCreator")
 @Parcelize
 internal data class RepoEntity(
         val id : Long,
