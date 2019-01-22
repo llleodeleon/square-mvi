@@ -2,8 +2,8 @@ package com.leodeleon.square.utils
 
 import android.content.res.Resources
 import android.os.Parcelable
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.View
 

@@ -1,6 +1,6 @@
 package com.leodeleon.square.features.repos
 
-import android.databinding.ObservableBoolean
+import androidx.databinding.ObservableBoolean
 import android.view.View
 import com.leodeleon.domain.entities.Repo
 import com.leodeleon.square.utils.Navigator

@@ -1,7 +1,7 @@
 package com.leodeleon.square.features.repos
 
 import android.content.Context
-import android.databinding.ObservableArrayList
+import androidx.databinding.ObservableArrayList
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.isVisible
